@@ -10,7 +10,10 @@ and it comes apart along the exact path your hand drew.
 [![three.js](https://img.shields.io/badge/three.js-r180-black?style=flat-square)](https://threejs.org)
 [![no assets](https://img.shields.io/badge/textures%20%26%20models-none-2ea043?style=flat-square)](#everything-is-generated)
 
-<img src="docs/media/hero.jpg" alt="Five objects on a wooden workbench: a sawn log, a fired brick, a green glass bottle, a stoneware vase and a blob of slime" width="820">
+<img src="docs/media/cut.gif" alt="A stoneware vase is cut diagonally with a curved mouse stroke; the top slides off and topples, and the camera comes round to show the hollow inside and the cut rim" width="760">
+
+<sub>One stroke. The cut follows the curve the mouse drew, both halves are sealed with a
+generated cross-section, and the top falls under its own weight.</sub>
 
 </div>
 
@@ -37,6 +40,8 @@ thing is about 500 kB gzipped, and nearly all of that is three.js.
 | **Physics** | sequential-impulse solver with convex hulls, real inertia tensors and sleeping — `src/game/physics.js` |
 
 ## The shelf
+
+<img src="docs/media/hero.jpg" alt="Five objects on a wooden workbench: a sawn log, a fired brick, a green glass bottle, a stoneware vase and a blob of slime" width="820">
 
 <table>
 <tr>
