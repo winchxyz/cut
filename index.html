@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+<meta name="theme-color" content="#e9e3d7" />
+<meta name="description" content="A quiet 3D slicing sandbox. Name an object, it gets built, then cut it apart with the mouse — real geometry, real cross-sections." />
+<title>Cut — a slicing sandbox</title>
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#e5dfd3;color:#3a352c;
+    font-family:'Segoe UI Variable Text','Segoe UI',system-ui,-apple-system,sans-serif;overflow:hidden}
+  #preboot{position:fixed;inset:0;display:grid;place-items:center;z-index:999;background:#e5dfd3}
+  #preboot .m{opacity:.45;letter-spacing:.34em;font-size:11px;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div id="preboot"><div class="m">setting up</div></div>
+
+<div id="app">
+  <canvas id="stage"></canvas>
+
+  <div id="ui">
+
+    <!-- ── top bar ─────────────────────────────────────────── -->
+    <header class="bar">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+          <path d="M4 20 L15 4.5 c1-1.4 3.2-.6 2.8 1.1 L14.4 20 Z"
+                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span>Cut</span>
+      </div>
+
+      <div class="bar-actions">
+        <button class="icon" id="btnReroll" title="Another one like it (R)" aria-label="Reroll">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon" id="btnRestore" title="Put it back together (Space)" aria-label="Restore">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 12h16M12 4v16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon" id="btnNudge" title="Tumble the pieces (T)" aria-label="Tumble">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l7 4v10l-7 4-7-4V7z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon" id="btnInfo" title="How it works" aria-label="Help">
+          <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 11v5M12 7.6v.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── the asset shelf ─────────────────────────────────── -->
+    <div class="shelf" id="shelf" role="listbox" aria-label="Objects"></div>
+
+    <!-- ── readout ─────────────────────────────────────────── -->
+    <div class="readout" id="readout">
+      <div class="rd"><span>object</span><b id="rdName">—</b></div>
+      <div class="rd"><span>material</span><b id="rdMat">—</b></div>
+      <div class="rd"><span>triangles</span><b id="rdTris">—</b></div>
+      <div class="rd"><span>cuts</span><b id="rdCuts">0</b></div>
+      <div class="rd"><span>pieces</span><b id="rdPieces">1</b></div>
+    </div>
+
+    <!-- ── hint ────────────────────────────────────────────── -->
+    <div class="hint" id="hint">
+      <b>drag across it</b> to cut · <b>right-drag</b> or <b>shift-drag</b> to look around · <b>scroll</b> to zoom
+    </div>
+
+    <!-- ── help sheet ──────────────────────────────────────── -->
+    <div class="sheet-wrap" id="helpSheet" hidden>
+      <div class="sheet">
+        <button class="sheet-close" data-close aria-label="Close">✕</button>
+        <h2>How it works</h2>
+        <p>
+          Pick an object from the shelf. None of them is a loaded model — each one is
+          <em>constructed</em> from solids: the chair is a seat, four tapered legs,
+          stretchers and a slatted back; the mug is a surface of revolution with a real
+          wall you can cut through.
+        </p>
+        <p>
+          Press, drag, release: one cut, along the straight line you drew, seen from where
+          the camera is. This is a real geometric cut — the mesh is split triangle by
+          triangle and both halves are sealed with a generated cross-section. Nothing is
+          thrown. Each piece gets a fresh centre of mass and then falls under its own
+          weight, which is why cutting a chair's legs drops the seat onto the bench.
+        </p>
+        <p>
+          The exposed face is not a flat colour. Wood shows end grain, ceramic shows a chalky
+          break, stone shows aggregate. Cut a piece again and you get another honest section
+          through the same material.
+        </p>
+        <div class="keys">
+          <div><kbd>drag</kbd> cut</div>
+          <div><kbd>right-drag</kbd> orbit</div>
+          <div><kbd>shift-drag</kbd> orbit</div>
+          <div><kbd>scroll</kbd> zoom</div>
+          <div><kbd>R</kbd> another one</div>
+          <div><kbd>Space</kbd> restore</div>
+          <div><kbd>T</kbd> shake the pieces</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

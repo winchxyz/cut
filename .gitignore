@@ -1,0 +1,9 @@
+node_modules/
+dist/
+
+# Capture output from the dev-only review harness. Anything worth keeping is
+# copied into docs/media and committed from there.
+tools/shots/
+
+*.log
+.DS_Store
